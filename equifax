@@ -20,7 +20,7 @@ node {
 	            sh "echo 'shell scripts to run integration tests...'"
 	        }
         }
-	stage ('Gradle Static Analysis')
+	stage ('Gradle Static Analysis'){
 		sh "echo 'run sonarqube'"
 	}
       	stage ('Deploy') {
