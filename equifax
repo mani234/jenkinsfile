@@ -6,6 +6,9 @@ node {
         stage ('Clone') {
         	checkout scm
 	}
+	stage ('Gradle Static Analysis'){
+		sh "echo 'run sonarqube'"
+	}
         stage ('Build') {
         	sh "echo 'shell scripts to build project...'"
         }
@@ -20,9 +23,6 @@ node {
 	            sh "echo 'shell scripts to run integration tests...'"
 	        }
         }
-	stage ('Gradle Static Analysis'){
-		sh "echo 'run sonarqube'"
-	}
       	stage ('Deploy') {
             sh "echo 'shell scripts to deploy to server...'"
       	}
