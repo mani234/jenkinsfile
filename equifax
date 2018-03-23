@@ -21,9 +21,7 @@ node {
 	        }
         }
 	stage ('Gradle Static Analysis')
-	withSoanrQubeENV {
-		sh "./gradle clean sonarqube"
-        }
+		sh "echo 'run sonarqube'"
 	}
       	stage ('Deploy') {
             sh "echo 'shell scripts to deploy to server...'"
