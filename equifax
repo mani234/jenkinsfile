@@ -5,7 +5,28 @@ node {
     try {
         stage ('Clone') {
         	checkout scm
+        stage 'Gradle Static Analysis'
+	withSoanrQubeENV {
+		sh "./gradle clean sonarqube"
         }
+        node {
+         env.PATH += ":/opt/terraform_0.7.13/"
+
+        stage ('Checkout') {
+        checkout scm
+        }
+
+         stage ('Terraform Plan') {
+        sh 'terraform plan -no-color -out=create.tfplan'
+        }
+
+        // Optional wait for approval
+        input 'Deploy stack?'
+
+        stage ('Terraform Apply') {
+        sh 'terraform apply -no-color create.tfplan'
+         }
+
         stage ('Build') {
         	sh "echo 'shell scripts to build project...'"
         }
@@ -28,6 +49,8 @@ node {
         throw err
     }
 }
+
+
 
       
        
