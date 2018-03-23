@@ -1,0 +1,33 @@
+node
+{
+  deleteDir()
+  try{
+    stage('clone')
+      checkout scm
+     }
+     stage('build'){
+      sh "echo `shell scrip to build project`"
+     }
+     stage('test'){
+      parallel 'static':{
+        sh "shell script to run test"
+      },
+      'unit':{
+        sh "echo `shell script to run unit test`"
+      },
+      'integration':{
+        sh "echo `shell script to run integration test`"
+      }
+      
+      }
+        stage ('Deploy') {
+        sh "echo 'shell script to deploy server.. '"
+        }
+      } catch(err) {
+        currentBuild.result = ' FAILED'
+        throw err
+        }
+        
+      }
+      
+       
